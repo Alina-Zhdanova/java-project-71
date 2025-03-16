@@ -4,12 +4,14 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Differ {
 
@@ -24,24 +26,66 @@ public class Differ {
         return Files.readString(path).trim();
     }
 
-    private static Map<String, Object> parseFile(String fileName) throws IOException {
-        var file = readFile(fileName);
+    private static Map<String, Object> parseFile(String filePath) throws IOException {
+        var file = readFile(filePath);
         var mapper = new ObjectMapper();
         var typeRef = new TypeReference<HashMap<String, Object>>() {};
         return mapper.readValue(file, typeRef);
     }
 
 
-//    public static String generate(String filePath1, String filePath2) throws IOException {
-//
-//        ObjectMapper mapper = new ObjectMapper();
-//
-//        Map<String, Object> map = mapper.readValue(new File(filePath1), Map.class);
-//    }
-//
-//    public static String readFilePath1(String fileName) throws Exception {
-//        var path = Paths.get("src", "test", "resources", fileName)
-//                .toAbsolutePath().normalize();
-//        return Files.readString(path).trim();
-//    }
+    public static ArrayList<Change> generate(String filePath1, String filePath2) throws IOException {
+
+        // получаем две мапы
+        var mapFile1 = parseFile(filePath1);
+        var mapFile2 = parseFile(filePath2);
+
+        // получаем два сета ключей
+        var keysFile1 = mapFile1.keySet();
+        var keysFile2 = mapFile2.keySet();
+
+        // делаем сет ключей из первой и второй мапы, но чтобы они не повторялись
+        for (var key : keysFile2) {
+            if (keysFile1.contains(key)) {
+                continue;
+            }
+            keysFile1.add(key);
+        }
+
+        // сортируем сет ключей в алфавитном порядке
+        var keys = keysFile1.stream()
+                .sorted()
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+
+        // дальше по идее я реализую сравнение значений мап, сохраняя результат в виде списка с объектами нового класса
+        var changes = new ArrayList<Change>();
+
+        // есть 3 случая:
+        for (var key : keys) {
+
+            // 1. Ключ есть в обоих мапах - значение осталось прежним/изменилось
+            if (keysFile1.contains(key) && keysFile2.contains(key)) {
+                if (mapFile1.get(key).equals(mapFile2.get(key))) {
+                    var change = new Change(" ", key, mapFile1.get(key));
+                    changes.add(change);
+                } else {
+                    var changeMinus = new Change("-", key, mapFile1.get(key));
+                    var changePlus = new Change("+", key, mapFile2.get(key));
+                    changes.add(changeMinus);
+                    changes.add(changePlus);
+                }
+
+                // 2. Ключ есть только в первой мапе - значение удалено
+            } else if (keysFile1.contains(key)) {
+                var changeMinus = new Change("-", key, mapFile1.get(key));
+                changes.add(changeMinus);
+
+                // 3. Ключ есть только во второй мапе - значение добавлено
+            } else if (keysFile2.contains(key)) {
+                var changePlus = new Change("+", key, mapFile2.get(key));
+                changes.add(changePlus);
+            }
+        }
+        return changes;
+    }
 }
