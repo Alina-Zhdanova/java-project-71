@@ -24,7 +24,18 @@ class App implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Hello, world!");
+        try {
+            var result = Differ.generate(filepath1, filepath2);
+            System.out.println("{");
+            result.forEach((change) -> {
+                System.out.println("  " + change.getChange() + " "
+                        + change.getKey() + ": "
+                        + change.getPastValue());
+            });
+            System.out.println("}");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void main(String[] args) {

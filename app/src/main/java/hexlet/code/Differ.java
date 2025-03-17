@@ -7,10 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Differ {
@@ -45,15 +42,17 @@ public class Differ {
         var keysFile2 = mapFile2.keySet();
 
         // делаем сет ключей из первой и второй мапы, но чтобы они не повторялись
+        var keysFile = new HashSet<String>(keysFile1);
+
         for (var key : keysFile2) {
-            if (keysFile1.contains(key)) {
+            if (keysFile.contains(key)) {
                 continue;
             }
-            keysFile1.add(key);
+            keysFile.add(key);
         }
 
         // сортируем сет ключей в алфавитном порядке
-        var keys = keysFile1.stream()
+        var keys = keysFile.stream()
                 .sorted()
                 .collect(Collectors.toCollection(LinkedHashSet::new));
 
