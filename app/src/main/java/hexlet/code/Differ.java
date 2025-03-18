@@ -7,7 +7,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.LinkedHashSet;
 import java.util.stream.Collectors;
 
 public class Differ {
@@ -26,12 +30,12 @@ public class Differ {
     private static Map<String, Object> parseFile(String filePath) throws IOException {
         var file = readFile(filePath);
         var mapper = new ObjectMapper();
-        var typeRef = new TypeReference<HashMap<String, Object>>() {};
+        var typeRef = new TypeReference<HashMap<String, Object>>() { };
         return mapper.readValue(file, typeRef);
     }
 
 
-    public static ArrayList<Change> generate(String filePath1, String filePath2) throws IOException {
+    public static String generate(String filePath1, String filePath2) throws IOException {
 
         // получаем две мапы
         var mapFile1 = parseFile(filePath1);
@@ -85,6 +89,19 @@ public class Differ {
                 changes.add(changePlus);
             }
         }
-        return changes;
+
+        var result = new StringBuilder("{\n");
+        changes.forEach((change) -> {
+            result.append("  ");
+            result.append(change.getChange());
+            result.append(" ");
+            result.append(change.getKey());
+            result.append(": ");
+            result.append(change.getPastValue());
+            result.append("\n");
+        });
+        result.append("}");
+
+        return result.toString();
     }
 }
