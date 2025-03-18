@@ -22,10 +22,8 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+        run: cd app/
       - name: Build with Gradle
-        defaults:
-          run:
-            working-directory: ./app
         run: app/gradlew checkstyleMain
 
 #name: Java CI
