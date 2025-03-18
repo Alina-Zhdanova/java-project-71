@@ -23,6 +23,9 @@ jobs:
           distribution: 'temurin'
 
       - name: Build with Gradle
+        defaults:
+          run:
+            working-directory: ./app
         run: app/gradlew checkstyleMain
 
 #name: Java CI
