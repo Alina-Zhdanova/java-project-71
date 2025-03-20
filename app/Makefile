@@ -1,7 +1,7 @@
-run-dist:
-		./build/install/app/bin/app /Users/alinazdanova/java-project-71/app/src/test/resources/file1.json /Users/alinazdanova/java-project-71/app/src/test/resources/file2.json
-
 .DEFAULT_GOAL := build-run
+
+run-dist:
+	./build/install/app/bin/app /Users/alinazdanova/java-project-71/app/src/test/resources/file1.json /Users/alinazdanova/java-project-71/app/src/test/resources/file2.json
 
 setup:
 	./gradlew wrapper --gradle-version 8.5
@@ -33,4 +33,5 @@ check-deps:
 
 build-run: build run
 
-.PHONY: build
+.PHONY: build test
+.PHONY: test
