@@ -49,8 +49,8 @@ tasks.jacocoTestReport { reports { xml.required.set(true) } }
 // Конфигурация плагина org.sonarqube
 sonar {
     properties {
-        property("sonar.projectKey", "hexlet-boilerplates_java-package")
-        property("sonar.organization", "hexlet-boilerplates")
+        property("sonar.projectKey", "hexlet.code_java-project-71")
+        property("sonar.organization", "hexlet.code")
         property("sonar.host.url", "https://sonarcloud.io")
     }
 }
