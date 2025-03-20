@@ -1,8 +1,14 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
 plugins {
     id("java")
     id("com.github.ben-manes.versions") version "0.51.0"
+    // Плагин для публикации отчета о покрытии тестами на SonarQube
+    id("org.sonarqube") version "6.0.1.5171"
     application
     checkstyle
+    jacoco
 }
 
 group = "hexlet.code"
@@ -28,4 +34,23 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+    // https://technology.lastminute.com/junit5-kotlin-and-gradle-dsl/
+    testLogging {
+        exceptionFormat = TestExceptionFormat.FULL
+        events = mutableSetOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
+        // showStackTraces = true
+        // showCauses = true
+        showStandardStreams = true
+    }
+}
+
+tasks.jacocoTestReport { reports { xml.required.set(true) } }
+
+// Конфигурация плагина org.sonarqube
+sonar {
+    properties {
+        property("sonar.projectKey", "hexlet-boilerplates_java-package")
+        property("sonar.organization", "hexlet-boilerplates")
+        property("sonar.host.url", "https://sonarcloud.io")
+    }
 }

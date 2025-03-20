@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class Differ {
 
-    private static Path pathFile(String filePath) {
+    public static Path pathFile(String filePath) {
         return Paths.get(filePath) //?
                     .toAbsolutePath()
                     .normalize();
