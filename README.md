@@ -6,3 +6,6 @@
 
 ### Step 6 - Comparing Flat Files (JSON)
 [![asciicast](https://asciinema.org/a/3NJJWxMDYRabmU96kcN4daLhg.svg)](https://asciinema.org/a/3NJJWxMDYRabmU96kcN4daLhg)
+
+### Step 8 - Comparison of flat files (yaml)
+[![asciicast](https://asciinema.org/a/5phrfOp5ZF9amRcDqurh82FT2.svg)](https://asciinema.org/a/5phrfOp5ZF9amRcDqurh82FT2)

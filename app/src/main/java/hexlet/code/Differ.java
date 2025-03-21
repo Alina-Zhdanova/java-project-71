@@ -1,14 +1,10 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import Parsers.ParserFactory;
+import Parsers.ParserInterface;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.LinkedHashSet;
@@ -16,24 +12,28 @@ import java.util.stream.Collectors;
 
 public class Differ {
 
-    public static Path pathFile(String filePath) {
-        return Paths.get(filePath) //?
-                    .toAbsolutePath()
-                    .normalize();
-    }
-
-    private static String readFile(String filePath) throws IOException {
-        var path = pathFile(filePath);
-        return Files.readString(path).trim();
-    }
+//    public static Path pathFile(String filePath) {
+//        return Paths.get(filePath)
+//                    .toAbsolutePath()
+//                    .normalize();
+//    }
+//
+//    private static String readFile(String filePath) throws IOException {
+//        var path = pathFile(filePath);
+//        return Files.readString(path).trim();
+//    }
+//
+//    private static Map<String, Object> parseFile(String filePath) throws IOException {
+//        var file = readFile(filePath);
+//        var mapper = new ObjectMapper();
+//        var typeRef = new TypeReference<HashMap<String, Object>>() { };
+//        return mapper.readValue(file, typeRef);
+//    }
 
     private static Map<String, Object> parseFile(String filePath) throws IOException {
-        var file = readFile(filePath);
-        var mapper = new ObjectMapper();
-        var typeRef = new TypeReference<HashMap<String, Object>>() { };
-        return mapper.readValue(file, typeRef);
+        ParserInterface parser = ParserFactory.getParser(filePath);
+        return parser.parse(filePath);
     }
-
 
     public static String generate(String filePath1, String filePath2) throws IOException {
 
