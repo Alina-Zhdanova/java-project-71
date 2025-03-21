@@ -49,8 +49,8 @@ tasks.jacocoTestReport { reports { xml.required.set(true) } }
 // Конфигурация плагина org.sonarqube
 sonar {
     properties {
-        property("sonar.projectKey", "hexlet.code_java-project-71")
-        property("sonar.organization", "hexlet.code")
+        property("sonar.projectKey", "Alina-Zhdanova_java-project-71")
+        property("sonar.organization", "alina-zhdanova")
         property("sonar.host.url", "https://sonarcloud.io")
     }
 }
