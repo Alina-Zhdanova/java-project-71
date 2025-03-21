@@ -1,7 +1,7 @@
 package hexlet.code;
 
-import Parsers.ParserFactory;
-import Parsers.ParserInterface;
+import parsers.ParserFactory;
+import parsers.ParserInterface;
 
 import java.io.IOException;
 import java.util.ArrayList;
