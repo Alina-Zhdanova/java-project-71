@@ -9,3 +9,6 @@
 
 ### Step 8 - Comparison of flat files (yaml)
 [![asciicast](https://asciinema.org/a/5phrfOp5ZF9amRcDqurh82FT2.svg)](https://asciinema.org/a/5phrfOp5ZF9amRcDqurh82FT2)
+
+### Step 9 - Data processing
+[![asciicast](https://asciinema.org/a/1wDJrm84FRjDxJRM7MWYUkg53.svg)](https://asciinema.org/a/1wDJrm84FRjDxJRM7MWYUkg53)

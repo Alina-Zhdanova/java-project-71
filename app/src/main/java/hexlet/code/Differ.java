@@ -6,9 +6,12 @@ import parsers.ParserInterface;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static hexlet.code.Formatter.stylish;
 
 public class Differ {
 
@@ -57,8 +60,8 @@ public class Differ {
 
         // сортируем сет ключей в алфавитном порядке
         var keys = keysFile.stream()
-                .sorted()
-                .collect(Collectors.toCollection(LinkedHashSet::new));
+            .sorted()
+            .collect(Collectors.toCollection(LinkedHashSet::new));
 
         // дальше по идее я реализую сравнение значений мап, сохраняя результат в виде списка с объектами нового класса
         var changes = new ArrayList<Change>();
@@ -68,7 +71,7 @@ public class Differ {
 
             // 1. Ключ есть в обоих мапах - значение осталось прежним/изменилось
             if (keysFile1.contains(key) && keysFile2.contains(key)) {
-                if (mapFile1.get(key).equals(mapFile2.get(key))) {
+                if (Objects.equals(mapFile1.get(key), (mapFile2.get(key)))) {
                     var change = new Change(" ", key, mapFile1.get(key));
                     changes.add(change);
                 } else {
@@ -90,18 +93,20 @@ public class Differ {
             }
         }
 
-        var result = new StringBuilder("{\n");
-        changes.forEach((change) -> {
-            result.append("  ");
-            result.append(change.getChange());
-            result.append(" ");
-            result.append(change.getKey());
-            result.append(": ");
-            result.append(change.getPastValue());
-            result.append("\n");
-        });
-        result.append("}");
+        return stylish(changes);
 
-        return result.toString();
+//        var result = new StringBuilder("{\n");
+//        changes.forEach((change) -> {
+//            result.append("  ");
+//            result.append(change.getChange());
+//            result.append(" ");
+//            result.append(change.getKey());
+//            result.append(": ");
+//            result.append(change.getPastValue());
+//            result.append("\n");
+//        });
+//        result.append("}");
+//
+//        return result.toString();
     }
 }
