@@ -18,14 +18,16 @@ public class GenerateTest {
     public void testNoSuchFileJson() {
         var filePath1 = getPath("file2.json");
         var filePath2 = getPath("file3.json");
-        assertThrows(IOException.class, () -> Differ.generate(filePath1, filePath2));
+        var formatName = "stylish";
+        assertThrows(IOException.class, () -> Differ.generate(filePath1, filePath2, formatName));
     }
 
     @Test
     public void testNoSuchFileYaml() {
         var filePath1 = getPath("file2.yaml");
         var filePath2 = getPath("file3.yaml");
-        assertThrows(IOException.class, () -> Differ.generate(filePath1, filePath2));
+        var formatName = "stylish";
+        assertThrows(IOException.class, () -> Differ.generate(filePath1, filePath2, formatName));
     }
 
     @Test
@@ -60,7 +62,8 @@ public class GenerateTest {
 
         var filePath1 = getPath("file1.json");
         var filePath2 = getPath("file2.json");
-        var expected = Differ.generate(filePath1, filePath2);
+        var formatName = "stylish";
+        var expected = Differ.generate(filePath1, filePath2, formatName);
 
         assertEquals(actual, expected);
     }
@@ -97,7 +100,34 @@ public class GenerateTest {
 
         var filePath1 = getPath("file1.yaml");
         var filePath2 = getPath("file2.yaml");
-        var expected = Differ.generate(filePath1, filePath2);
+        var formatName = "stylish";
+        var expected = Differ.generate(filePath1, filePath2, formatName);
+
+        assertEquals(actual, expected);
+    }
+
+    @Test
+    public void testGenerateJsonPlain() throws IOException {
+
+        var actual = """
+            Property 'chars2' was updated. From [complex value] to false
+            Property 'checked' was updated. From false to true
+            Property 'default' was updated. From null to [complex value]
+            Property 'id' was updated. From 45 to null
+            Property 'key1' was removed
+            Property 'key2' was added with value: 'value2'
+            Property 'numbers2' was updated. From [complex value] to [complex value]
+            Property 'numbers3' was removed
+            Property 'numbers4' was added with value: [complex value]
+            Property 'obj1' was added with value: [complex value]
+            Property 'setting1' was updated. From 'Some value' to 'Another value'
+            Property 'setting2' was updated. From 200 to 300
+            Property 'setting3' was updated. From true to 'none'""";
+
+        var filePath1 = getPath("file1.json");
+        var filePath2 = getPath("file2.json");
+        var formatName = "plain";
+        var expected = Differ.generate(filePath1, filePath2, formatName);
 
         assertEquals(actual, expected);
     }

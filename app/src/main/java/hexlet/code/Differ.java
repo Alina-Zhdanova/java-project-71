@@ -1,5 +1,7 @@
 package hexlet.code;
 
+import formatters.FormatterFactory;
+import formatters.FormatterInterface;
 import parsers.ParserFactory;
 import parsers.ParserInterface;
 
@@ -10,8 +12,6 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import static hexlet.code.Formatter.stylish;
 
 public class Differ {
 
@@ -38,7 +38,7 @@ public class Differ {
         return parser.parse(filePath);
     }
 
-    public static String generate(String filePath1, String filePath2) throws IOException {
+    public static String generate(String filePath1, String filePath2, String formatName) throws IOException {
 
         // получаем две мапы
         var mapFile1 = parseFile(filePath1);
@@ -93,7 +93,8 @@ public class Differ {
             }
         }
 
-        return stylish(changes);
+        FormatterInterface format = FormatterFactory.getFormatter(formatName);
+        return format.formatter(changes);
 
 //        var result = new StringBuilder("{\n");
 //        changes.forEach((change) -> {

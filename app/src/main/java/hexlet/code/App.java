@@ -4,6 +4,7 @@ import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
+
 import java.io.IOException;
 
 @Command(name = "gendiff", mixinStandardHelpOptions = true, version = "1.0",
@@ -17,13 +18,13 @@ class App implements Runnable {
     String filepath2;
 
     @Option(names = {"-f", "--format"}, description = "Output format [default: stylish].",
-            defaultValue = "stylish", paramLabel = "format")
-    private String format;
+        defaultValue = "stylish", paramLabel = "format")
+    String formatName;
 
     @Override
     public void run() {
         try {
-            var result = Differ.generate(filepath1, filepath2);
+            var result = Differ.generate(filepath1, filepath2, formatName);
             System.out.println(result);
         } catch (IOException e) {
             throw new RuntimeException(e);

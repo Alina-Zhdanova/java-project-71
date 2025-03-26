@@ -15,3 +15,6 @@
 
 ### Step 9 - Data processing
 [![asciicast](https://asciinema.org/a/1wDJrm84FRjDxJRM7MWYUkg53.svg)](https://asciinema.org/a/1wDJrm84FRjDxJRM7MWYUkg53)
+
+### Step 10 - Flat format.
+[![asciicast](https://asciinema.org/a/vSL8gzRC87uKqs7TlSgWe6d4z.svg)](https://asciinema.org/a/vSL8gzRC87uKqs7TlSgWe6d4z)

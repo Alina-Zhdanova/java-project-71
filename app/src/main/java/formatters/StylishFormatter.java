@@ -1,9 +1,13 @@
-package hexlet.code;
+package formatters;
+
+import hexlet.code.Change;
 
 import java.util.List;
 
-public class Formatter {
-    public static String stylish(List<Change> changes) {
+public class StylishFormatter implements FormatterInterface {
+
+    @Override
+    public String formatter(List<Change> changes) {
 
         var result = new StringBuilder("{\n");
 
