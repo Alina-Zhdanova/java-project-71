@@ -50,8 +50,8 @@ public class PlainFormatter implements FormatterInterface {
                                 if (informationAboutChanges.get(i + 1).getPastValue() instanceof String) {
                                     // если да, то добавляем в лист строку с '' вокруг 2 значения
                                     var change = "Property '" + informationAboutChanges.get(i).getKey()
-                                        + "' was updated. From [complex value] to '" +
-                                        informationAboutChanges.get(i + 1).getPastValue() + "'";
+                                        + "' was updated. From [complex value] to '"
+                                        + informationAboutChanges.get(i + 1).getPastValue() + "'";
                                     changesPlain.add(change);
                                     // увеличиваем счётчик на 2
                                     i = i + 2;
