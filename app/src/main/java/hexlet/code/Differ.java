@@ -110,4 +110,8 @@ public class Differ {
 //
 //        return result.toString();
     }
+
+    public static String generate(String filePath1, String filePath2) throws IOException {
+        return generate(filePath1,filePath2, "stylish");
+    }
 }
