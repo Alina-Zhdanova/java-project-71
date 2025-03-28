@@ -26,7 +26,7 @@ public class GenerateTest {
     public void testNoSuchFileYaml() {
         var filePath1 = getPath("file2.yaml");
         var filePath2 = getPath("file3.yaml");
-        var formatName = "stylish";
+        var formatName = "plain";
         assertThrows(IOException.class, () -> Differ.generate(filePath1, filePath2, formatName));
     }
 
@@ -127,6 +127,71 @@ public class GenerateTest {
         var filePath1 = getPath("file1.json");
         var filePath2 = getPath("file2.json");
         var formatName = "plain";
+        var expected = Differ.generate(filePath1, filePath2, formatName);
+
+        assertEquals(actual, expected);
+    }
+
+    @Test
+    public void testGenerateJsonFormatter() throws IOException {
+
+        var actual = """
+            {
+              "chars2" : {
+                "-" : [ "d", "e", "f" ],
+                "+" : false
+              },
+              "checked" : {
+                "-" : false,
+                "+" : true
+              },
+              "default" : {
+                "-" : null,
+                "+" : [ "value1", "value2" ]
+              },
+              "id" : {
+                "-" : 45,
+                "+" : null
+              },
+              "key1" : {
+                "-" : "value1"
+              },
+              "key2" : {
+                "+" : "value2"
+              },
+              "numbers2" : {
+                "-" : [ 2, 3, 4, 5 ],
+                "+" : [ 22, 33, 44, 55 ]
+              },
+              "numbers3" : {
+                "-" : [ 3, 4, 5 ]
+              },
+              "numbers4" : {
+                "+" : [ 4, 5, 6 ]
+              },
+              "obj1" : {
+                "+" : {
+                  "nestedKey" : "value",
+                  "isNested" : true
+                }
+              },
+              "setting1" : {
+                "-" : "Some value",
+                "+" : "Another value"
+              },
+              "setting2" : {
+                "-" : 200,
+                "+" : 300
+              },
+              "setting3" : {
+                "-" : true,
+                "+" : "none"
+              }
+            }""";
+
+        var filePath1 = getPath("file1.yaml");
+        var filePath2 = getPath("file2.yaml");
+        var formatName = "json";
         var expected = Differ.generate(filePath1, filePath2, formatName);
 
         assertEquals(actual, expected);

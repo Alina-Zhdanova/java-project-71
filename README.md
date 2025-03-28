@@ -18,3 +18,6 @@
 
 ### Step 10 - Flat format.
 [![asciicast](https://asciinema.org/a/vSL8gzRC87uKqs7TlSgWe6d4z.svg)](https://asciinema.org/a/vSL8gzRC87uKqs7TlSgWe6d4z)
+
+### Step 11 - Output in json.
+[![asciicast](https://asciinema.org/a/GFPUc7NnCjBbUv3ECJR0XeON3.svg)](https://asciinema.org/a/GFPUc7NnCjBbUv3ECJR0XeON3)

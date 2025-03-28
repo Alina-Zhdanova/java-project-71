@@ -10,6 +10,7 @@ public class FormatterFactory {
         return switch (format) {
             case "stylish" -> new StylishFormatter();
             case "plain" -> new PlainFormatter();
+            case "json" -> new JsonFormatter();
             default -> throw new IOException();
         };
     }
