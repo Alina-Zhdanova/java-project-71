@@ -1,4 +1,4 @@
-package formatters;
+package hexlet.code.formatters;
 
 import hexlet.code.Change;
 
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class PlainFormatter implements FormatterInterface {
+public final class PlainFormatter implements FormatterInterface {
 
     @Override
     public String formatter(List<Change> changes) {

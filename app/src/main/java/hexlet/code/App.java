@@ -12,14 +12,14 @@ import java.io.IOException;
 class App implements Runnable {
 
     @Parameters(paramLabel = "filepath1", description = "Path to first file.")
-    String filepath1;
+    private String filepath1;
 
     @Parameters(paramLabel = "filepath2", description = "Path to second file.")
-    String filepath2;
+    private String filepath2;
 
     @Option(names = {"-f", "--format"}, description = "Output format [default: stylish].",
         defaultValue = "stylish", paramLabel = "format")
-    String formatName;
+    private String formatName;
 
     @Override
     public void run() {

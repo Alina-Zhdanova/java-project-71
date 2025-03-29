@@ -1,4 +1,4 @@
-package formatters;
+package hexlet.code.formatters;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,7 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 
-public class JsonFormatter implements FormatterInterface {
+public final class JsonFormatter implements FormatterInterface {
 
     private static String getPath(String fileName) {
         return String.valueOf(Paths.get("src", "test", "resources", "fixtures", fileName)

@@ -1,10 +1,10 @@
-package formatters;
+package hexlet.code.formatters;
 
 import hexlet.code.Change;
 
 import java.util.List;
 
-public class StylishFormatter implements FormatterInterface {
+public final class StylishFormatter implements FormatterInterface {
 
     @Override
     public String formatter(List<Change> changes) {

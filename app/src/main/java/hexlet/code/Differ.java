@@ -1,9 +1,9 @@
 package hexlet.code;
 
-import formatters.FormatterFactory;
-import formatters.FormatterInterface;
-import parsers.ParserFactory;
-import parsers.ParserInterface;
+import hexlet.code.formatters.FormatterFactory;
+import hexlet.code.formatters.FormatterInterface;
+import hexlet.code.parsers.ParserFactory;
+import hexlet.code.parsers.ParserInterface;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -112,6 +112,6 @@ public class Differ {
     }
 
     public static String generate(String filePath1, String filePath2) throws IOException {
-        return generate(filePath1,filePath2, "stylish");
+        return generate(filePath1, filePath2, "stylish");
     }
 }
