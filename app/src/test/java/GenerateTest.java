@@ -55,7 +55,7 @@ public class GenerateTest {
         "json, file2.yaml, file3.yaml",
         "json, file2.yml, file3.yml"
     })
-    public void noSuchFileTest (String formatName, String fileName1, String fileName2) {
+    public void noSuchFileTest(String formatName, String fileName1, String fileName2) {
         var filePath1 = getPath(fileName1);
         var filePath2 = getPath(fileName2);
         assertThrows(IOException.class, () -> Differ.generate(filePath1, filePath2, formatName));
