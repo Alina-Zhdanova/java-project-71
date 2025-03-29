@@ -1,7 +1,9 @@
 import hexlet.code.Differ;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,184 +16,79 @@ public class GenerateTest {
                 .toAbsolutePath().normalize());
     }
 
-    @Test
-    public void testNoSuchFileJson() {
-        var filePath1 = getPath("file2.json");
-        var filePath2 = getPath("file3.json");
-        var formatName = "stylish";
+    private static String getActual(String formatName) throws IOException {
+        var path = Paths.get("src", "test", "resources", "fixtures", formatName)
+            .toAbsolutePath().normalize();
+        return Files.readString(path).trim();
+    }
+
+    @ParameterizedTest
+    @CsvSource ({
+        "stylish, file1.json, file2.json",
+        "stylish, file1.yaml, file2.yaml",
+        "stylish, file1.yml, file2.yml",
+        "plain, file1.json, file2.json",
+        "plain, file1.yaml, file2.yaml",
+        "plain, file1.yml, file2.yml",
+        "json, file1.json, file2.json",
+        "json, file1.yaml, file2.yaml",
+        "json, file1.yml, file2.yml"
+    })
+    public void differTest(String formatName, String fileName1, String fileName2) throws IOException {
+        var actual = getActual(formatName);
+        var filePath1 = getPath(fileName1);
+        var filePath2 = getPath(fileName2);
+        var expected = Differ.generate(filePath1, filePath2, formatName);
+
+        assertEquals(actual, expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource ({
+        "stylish, file2.json, file3.json",
+        "stylish, file2.yaml, file3.yaml",
+        "stylish, file2.yml, file3.yml",
+        "plain, file2.json, file3.json",
+        "plain, file2.yaml, file3.yaml",
+        "plain, file2.yml, file3.yml",
+        "json, file2.json, file3.json",
+        "json, file2.yaml, file3.yaml",
+        "json, file2.yml, file3.yml"
+    })
+    public void noSuchFileTest (String formatName, String fileName1, String fileName2) {
+        var filePath1 = getPath(fileName1);
+        var filePath2 = getPath(fileName2);
         assertThrows(IOException.class, () -> Differ.generate(filePath1, filePath2, formatName));
     }
 
-    @Test
-    public void testNoSuchFileYaml() {
-        var filePath1 = getPath("file2.yaml");
-        var filePath2 = getPath("file3.yaml");
-        var formatName = "plain";
-        assertThrows(IOException.class, () -> Differ.generate(filePath1, filePath2, formatName));
-    }
-
-    @Test
-    public void testGenerateJson() throws IOException {
-
-        var actual = """
-            {
-                chars1: [a, b, c]
-              - chars2: [d, e, f]
-              + chars2: false
-              - checked: false
-              + checked: true
-              - default: null
-              + default: [value1, value2]
-              - id: 45
-              + id: null
-              - key1: value1
-              + key2: value2
-                numbers1: [1, 2, 3, 4]
-              - numbers2: [2, 3, 4, 5]
-              + numbers2: [22, 33, 44, 55]
-              - numbers3: [3, 4, 5]
-              + numbers4: [4, 5, 6]
-              + obj1: {nestedKey=value, isNested=true}
-              - setting1: Some value
-              + setting1: Another value
-              - setting2: 200
-              + setting2: 300
-              - setting3: true
-              + setting3: none
-            }""";
-
-        var filePath1 = getPath("file1.json");
-        var filePath2 = getPath("file2.json");
-        var formatName = "stylish";
-        var expected = Differ.generate(filePath1, filePath2, formatName);
+    @ParameterizedTest
+    @CsvSource ({
+        "file1.json, file2.json, stylish",
+        "file1.yaml, file2.yaml, stylish",
+        "file1.yml, file2.yml, stylish"
+    })
+    public void defaultTest(String fileName1, String fileName2, String actualName) throws IOException {
+        var actual = getActual(actualName);
+        var filePath1 = getPath(fileName1);
+        var filePath2 = getPath(fileName2);
+        var expected = Differ.generate(filePath1, filePath2);
 
         assertEquals(actual, expected);
     }
 
-    @Test
-    public void testGenerateYaml() throws IOException {
-
-        var actual = """
-            {
-                chars1: [a, b, c]
-              - chars2: [d, e, f]
-              + chars2: false
-              - checked: false
-              + checked: true
-              - default: null
-              + default: [value1, value2]
-              - id: 45
-              + id: null
-              - key1: value1
-              + key2: value2
-                numbers1: [1, 2, 3, 4]
-              - numbers2: [2, 3, 4, 5]
-              + numbers2: [22, 33, 44, 55]
-              - numbers3: [3, 4, 5]
-              + numbers4: [4, 5, 6]
-              + obj1: {nestedKey=value, isNested=true}
-              - setting1: Some value
-              + setting1: Another value
-              - setting2: 200
-              + setting2: 300
-              - setting3: true
-              + setting3: none
-            }""";
-
-        var filePath1 = getPath("file1.yaml");
-        var filePath2 = getPath("file2.yaml");
-        var formatName = "stylish";
-        var expected = Differ.generate(filePath1, filePath2, formatName);
-
-        assertEquals(actual, expected);
-    }
-
-    @Test
-    public void testGenerateJsonPlain() throws IOException {
-
-        var actual = """
-            Property 'chars2' was updated. From [complex value] to false
-            Property 'checked' was updated. From false to true
-            Property 'default' was updated. From null to [complex value]
-            Property 'id' was updated. From 45 to null
-            Property 'key1' was removed
-            Property 'key2' was added with value: 'value2'
-            Property 'numbers2' was updated. From [complex value] to [complex value]
-            Property 'numbers3' was removed
-            Property 'numbers4' was added with value: [complex value]
-            Property 'obj1' was added with value: [complex value]
-            Property 'setting1' was updated. From 'Some value' to 'Another value'
-            Property 'setting2' was updated. From 200 to 300
-            Property 'setting3' was updated. From true to 'none'""";
-
-        var filePath1 = getPath("file1.json");
-        var filePath2 = getPath("file2.json");
-        var formatName = "plain";
-        var expected = Differ.generate(filePath1, filePath2, formatName);
-
-        assertEquals(actual, expected);
-    }
-
-    @Test
-    public void testGenerateJsonFormatter() throws IOException {
-
-        var actual = """
-            {
-              "chars2" : {
-                "-" : [ "d", "e", "f" ],
-                "+" : false
-              },
-              "checked" : {
-                "-" : false,
-                "+" : true
-              },
-              "default" : {
-                "-" : null,
-                "+" : [ "value1", "value2" ]
-              },
-              "id" : {
-                "-" : 45,
-                "+" : null
-              },
-              "key1" : {
-                "-" : "value1"
-              },
-              "key2" : {
-                "+" : "value2"
-              },
-              "numbers2" : {
-                "-" : [ 2, 3, 4, 5 ],
-                "+" : [ 22, 33, 44, 55 ]
-              },
-              "numbers3" : {
-                "-" : [ 3, 4, 5 ]
-              },
-              "numbers4" : {
-                "+" : [ 4, 5, 6 ]
-              },
-              "obj1" : {
-                "+" : {
-                  "nestedKey" : "value",
-                  "isNested" : true
-                }
-              },
-              "setting1" : {
-                "-" : "Some value",
-                "+" : "Another value"
-              },
-              "setting2" : {
-                "-" : 200,
-                "+" : 300
-              },
-              "setting3" : {
-                "-" : true,
-                "+" : "none"
-              }
-            }""";
-
-        var filePath1 = getPath("file1.yaml");
-        var filePath2 = getPath("file2.yaml");
-        var formatName = "json";
+    @ParameterizedTest
+    @CsvSource ({
+        "stylish, file1.json, file2.yaml",
+        "stylish, file1.json, file2.yml",
+        "plain, file1.json, file2.yaml",
+        "plain, file1.json, file2.yml",
+        "json, file1.json, file2.yaml",
+        "json, file1.json, file2.yml"
+    })
+    public void diffExtensionsTest(String formatName, String fileName1, String fileName2) throws IOException {
+        var actual = getActual(formatName);
+        var filePath1 = getPath(fileName1);
+        var filePath2 = getPath(fileName2);
         var expected = Differ.generate(filePath1, filePath2, formatName);
 
         assertEquals(actual, expected);
