@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class GenerateTest {
+public final class GenerateTest {
 
     private static String getPath(String fileName) {
         return String.valueOf(Paths.get("src", "test", "resources", "fixtures", fileName)
