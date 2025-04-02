@@ -158,14 +158,4 @@ public final class PlainFormatter implements FormatterInterface {
         var result = new StringBuilder(stringChangesPlain);
         return result.toString();
     }
-
-//        var result = new StringBuilder();
-//
-//        changesPlain.forEach((change) -> {
-//            result.append(change);
-//            result.append("\n");
-//        });
-//
-//        return result.toString();
-//    }
 }

@@ -2,7 +2,6 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
-    id("java")
     id("com.github.ben-manes.versions") version "0.51.0"
     // Плагин для публикации отчета о покрытии тестами на SonarQube
     id("org.sonarqube") version "6.0.1.5171"
