@@ -48,9 +48,9 @@ public final class GenerateTest {
         "stylish, file2.json, file3.json",
         "stylish, file2.yaml, file3.yaml",
         "stylish, file2.yml, file3.yml",
-//        "plain, file2.json, file3.json",
-//        "plain, file2.yaml, file3.yaml",
-//        "plain, file2.yml, file3.yml",
+        "plain, file2.json, file3.json",
+        "plain, file2.yaml, file3.yaml",
+        "plain, file2.yml, file3.yml",
         "json, file2.json, file3.json",
         "json, file2.yaml, file3.yaml",
         "json, file2.yml, file3.yml"
@@ -80,8 +80,8 @@ public final class GenerateTest {
     @CsvSource ({
         "stylish, file1.json, file2.yaml",
         "stylish, file1.json, file2.yml",
-//        "plain, file1.json, file2.yaml",
-//        "plain, file1.json, file2.yml",
+        "plain, file1.json, file2.yaml",
+        "plain, file1.json, file2.yml",
         "json, file1.json, file2.yaml",
         "json, file1.json, file2.yml"
     })

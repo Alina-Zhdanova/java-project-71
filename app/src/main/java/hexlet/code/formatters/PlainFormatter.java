@@ -154,6 +154,7 @@ public final class PlainFormatter implements FormatterInterface {
                         }
                     }
                 }
+                default -> throw new Error("Unknown status!");
             }
         }
         return String.join("\n", changesPlain);

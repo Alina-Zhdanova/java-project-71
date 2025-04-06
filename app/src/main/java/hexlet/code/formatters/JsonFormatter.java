@@ -57,6 +57,7 @@ public final class JsonFormatter implements FormatterInterface {
 
                     i = i + 1;
                 }
+                default -> throw new Error("Unknown status!");
             }
         }
 
