@@ -11,17 +11,44 @@ public final class StylishFormatter implements FormatterInterface {
 
         var result = new StringBuilder("{\n");
 
-        changes.forEach((change) -> {
-            result.append("  ");
-            result.append(change.getChange());
-            result.append(" ");
-            result.append(change.getKey());
-            result.append(": ");
-            result.append(change.getPastValue());
-            result.append("\n");
-        });
+        for (Change change : changes) {
+            switch (change.getChange()) {
+                case "Not changed" -> {
+                    result.append("    ");
+                    result.append(change.getKey());
+                    result.append(": ");
+                    result.append(change.getPastValue());
+                    result.append("\n");
+                }
+                case "Changed" -> {
+                    result.append("  - ");
+                    result.append(change.getKey());
+                    result.append(": ");
+                    result.append(change.getPastValue());
+                    result.append("\n");
+                    result.append("  + ");
+                    result.append(change.getKey());
+                    result.append(": ");
+                    result.append(change.getPresentValue());
+                    result.append("\n");
+                }
+                case "Deleted" -> {
+                    result.append("  - ");
+                    result.append(change.getKey());
+                    result.append(": ");
+                    result.append(change.getPastValue());
+                    result.append("\n");
+                }
+                case "Added" -> {
+                    result.append("  + ");
+                    result.append(change.getKey());
+                    result.append(": ");
+                    result.append(change.getPresentValue());
+                    result.append("\n");
+                }
+            }
+        }
         result.append("}");
-
         return result.toString();
     }
 }

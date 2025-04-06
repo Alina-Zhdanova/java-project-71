@@ -7,69 +7,59 @@ import hexlet.code.Change;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 
 public final class JsonFormatter implements FormatterInterface {
 
-    private static String getPath(String fileName) {
-        return String.valueOf(Paths.get("src", "test", "resources", "fixtures", fileName)
-            .toAbsolutePath().normalize());
-    }
-
     @Override
     public String formatter(List<Change> changes) {
 
         var informationAboutChanges = changes.stream()
-            .filter(change -> !Objects.equals(change.getChange(), " "))
+            .filter(change -> !Objects.equals(change.getChange(), "Not changed"))
             .toList();
         var changesJson = new LinkedHashMap<String, Object>();
 
         var i = 0;
         while (i < informationAboutChanges.size()) {
 
-            if (informationAboutChanges.get(i).getChange().equals("-")) {
+            switch (informationAboutChanges.get(i).getChange()) {
+                case "Changed" -> {
 
-                if (i != informationAboutChanges.size() - 1) {
+                    var change = new LinkedHashMap<String, Object>();
+                    change.put("-", informationAboutChanges.get(i).getPastValue());
+                    change.put("+", informationAboutChanges.get(i).getPresentValue());
 
-                    // проверяем, равны ли ключи, если ключи равны, значит значение было изменено
-                    if (informationAboutChanges.get(i).getKey().equals(informationAboutChanges.get(i + 1).getKey())) {
+                    changesJson.put(informationAboutChanges.get(i).getKey(), change);
 
-                        var change = new LinkedHashMap<String, Object>();
-                        change.put("-", informationAboutChanges.get(i).getPastValue());
-                        change.put("+", informationAboutChanges.get(i + 1).getPastValue());
+                    i = i + 1;
 
-                        changesJson.put(informationAboutChanges.get(i).getKey(), change);
-
-                        i = i + 2;
-
-                    } else {
-
-                        // если "-", но соседние ключи не равны, значит элемент удалён
-                        var change = new LinkedHashMap<String, Object>();
-                        change.put("-", informationAboutChanges.get(i).getPastValue());
-
-                        changesJson.put(informationAboutChanges.get(i).getKey(), change);
-
-                        i = i + 1;
-
-                    }
                 }
-            } else {
+                case "Deleted" -> {
 
-                // и если "+", то значение было добавлено
-                var change = new LinkedHashMap<String, Object>();
-                change.put("+", informationAboutChanges.get(i).getPastValue());
+                    // если "-", но соседние ключи не равны, значит элемент удалён
+                    var change = new LinkedHashMap<String, Object>();
+                    change.put("-", informationAboutChanges.get(i).getPastValue());
 
-                changesJson.put(informationAboutChanges.get(i).getKey(), change);
+                    changesJson.put(informationAboutChanges.get(i).getKey(), change);
 
-                i = i + 1;
+                    i = i + 1;
+
+                }
+                case "Added" -> {
+
+                    // и если "+", то значение было добавлено
+                    var change = new LinkedHashMap<String, Object>();
+                    change.put("+", informationAboutChanges.get(i).getPresentValue());
+
+                    changesJson.put(informationAboutChanges.get(i).getKey(), change);
+
+                    i = i + 1;
+                }
             }
         }
 
-        var pathFile = getPath("OutputFormatter.json");
         var mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
