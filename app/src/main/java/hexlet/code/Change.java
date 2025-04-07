@@ -1,13 +1,10 @@
 package hexlet.code;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-@Getter
-@AllArgsConstructor
-public class Change {
-    private final String change;
-    private final String key;
-    private final Object pastValue;
-    private final Object presentValue;
+public record Change(Status status, String key, Object pastValue, Object presentValue) {
+    public enum Status {
+        NOT_CHANGED,
+        CHANGED,
+        DELETED,
+        ADDED;
+    }
 }

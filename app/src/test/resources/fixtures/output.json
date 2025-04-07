@@ -3,6 +3,9 @@
     "-" : [ "d", "e", "f" ],
     "+" : false
   },
+  "chars3" : {
+    "+" : "value"
+  },
   "checked" : {
     "-" : false,
     "+" : true

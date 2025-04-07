@@ -12,38 +12,38 @@ public final class StylishFormatter implements FormatterInterface {
         var result = new StringBuilder("{\n");
 
         for (Change change : changes) {
-            switch (change.getChange()) {
-                case "Not changed" -> {
+            switch (change.status()) {
+                case NOT_CHANGED -> {
                     result.append("    ");
-                    result.append(change.getKey());
+                    result.append(change.key());
                     result.append(": ");
-                    result.append(change.getPastValue());
+                    result.append(change.pastValue());
                     result.append("\n");
                 }
-                case "Changed" -> {
+                case CHANGED -> {
                     result.append("  - ");
-                    result.append(change.getKey());
+                    result.append(change.key());
                     result.append(": ");
-                    result.append(change.getPastValue());
+                    result.append(change.pastValue());
                     result.append("\n");
                     result.append("  + ");
-                    result.append(change.getKey());
+                    result.append(change.key());
                     result.append(": ");
-                    result.append(change.getPresentValue());
+                    result.append(change.presentValue());
                     result.append("\n");
                 }
-                case "Deleted" -> {
+                case DELETED -> {
                     result.append("  - ");
-                    result.append(change.getKey());
+                    result.append(change.key());
                     result.append(": ");
-                    result.append(change.getPastValue());
+                    result.append(change.pastValue());
                     result.append("\n");
                 }
-                case "Added" -> {
+                case ADDED -> {
                     result.append("  + ");
-                    result.append(change.getKey());
+                    result.append(change.key());
                     result.append(": ");
-                    result.append(change.getPresentValue());
+                    result.append(change.presentValue());
                     result.append("\n");
                 }
                 default -> throw new Error("Unknown status!");

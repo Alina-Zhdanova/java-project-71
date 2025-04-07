@@ -9,55 +9,46 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Objects;
 
 public final class JsonFormatter implements FormatterInterface {
 
     @Override
     public String formatter(List<Change> changes) {
 
-        var informationAboutChanges = changes.stream()
-            .filter(change -> !Objects.equals(change.getChange(), "Not changed"))
-            .toList();
         var changesJson = new LinkedHashMap<String, Object>();
 
-        var i = 0;
-        while (i < informationAboutChanges.size()) {
+        for (var line : changes) {
 
-            switch (informationAboutChanges.get(i).getChange()) {
-                case "Changed" -> {
+            switch (line.status()) {
 
+                case NOT_CHANGED -> { }
+
+                case CHANGED -> {
                     var change = new LinkedHashMap<String, Object>();
-                    change.put("-", informationAboutChanges.get(i).getPastValue());
-                    change.put("+", informationAboutChanges.get(i).getPresentValue());
+                    change.put("-", line.pastValue());
+                    change.put("+", line.presentValue());
 
-                    changesJson.put(informationAboutChanges.get(i).getKey(), change);
-
-                    i = i + 1;
-
+                    changesJson.put(line.key(), change);
                 }
-                case "Deleted" -> {
 
+                case DELETED -> {
                     // если "-", но соседние ключи не равны, значит элемент удалён
                     var change = new LinkedHashMap<String, Object>();
-                    change.put("-", informationAboutChanges.get(i).getPastValue());
+                    change.put("-", line.pastValue());
 
-                    changesJson.put(informationAboutChanges.get(i).getKey(), change);
-
-                    i = i + 1;
-
+                    changesJson.put(line.key(), change);
                 }
-                case "Added" -> {
 
+                case ADDED -> {
                     // и если "+", то значение было добавлено
                     var change = new LinkedHashMap<String, Object>();
-                    change.put("+", informationAboutChanges.get(i).getPresentValue());
+                    change.put("+", line.presentValue());
 
-                    changesJson.put(informationAboutChanges.get(i).getKey(), change);
-
-                    i = i + 1;
+                    changesJson.put(line.key(), change);
                 }
+
                 default -> throw new Error("Unknown status!");
+
             }
         }
 

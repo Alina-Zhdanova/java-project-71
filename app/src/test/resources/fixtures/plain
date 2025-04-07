@@ -1,4 +1,5 @@
 Property 'chars2' was updated. From [complex value] to false
+Property 'chars3' was added with value: 'value'
 Property 'checked' was updated. From false to true
 Property 'default' was updated. From null to [complex value]
 Property 'id' was updated. From 45 to null

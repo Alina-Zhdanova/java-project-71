@@ -11,6 +11,7 @@
   "numbers4": [4, 5, 6],
   "chars1": ["a", "b", "c"],
   "chars2": false,
+  "chars3": "value",
   "obj1": {
     "nestedKey": "value",
     "isNested": true

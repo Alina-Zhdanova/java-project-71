@@ -32,25 +32,26 @@ public class ChangesGenerator {
             // 1. Ключ есть в обоих мапах - значение осталось прежним/изменилось
             if (keysFile1.contains(key) && keysFile2.contains(key)) {
                 if (Objects.equals(mapFile1.get(key), (mapFile2.get(key)))) {
-                    var change = new Change("Not changed", key, mapFile1.get(key), mapFile2.get(key));
+                    var change = new Change(Change.Status.NOT_CHANGED, key, mapFile1.get(key), mapFile2.get(key));
                     changes.add(change);
                 } else {
-                    var change = new Change("Changed", key, mapFile1.get(key), mapFile2.get(key));
+                    var change = new Change(Change.Status.CHANGED, key, mapFile1.get(key), mapFile2.get(key));
                     changes.add(change);
                 }
+                continue;
+            }
 
-                // 2. Ключ есть только в первой мапе - значение удалено
-            } else if (keysFile1.contains(key)) {
-                var changeMinus = new Change("Deleted", key, mapFile1.get(key), "There is no value");
+            if (keysFile1.contains(key)) {
+                var changeMinus = new Change(Change.Status.DELETED, key, mapFile1.get(key), "There is no value");
                 changes.add(changeMinus);
+                continue;
+            }
 
-                // 3. Ключ есть только во второй мапе - значение добавлено
-            } else if (keysFile2.contains(key)) {
-                var changePlus = new Change("Added", key, "There is no value", mapFile2.get(key));
+            if (keysFile2.contains(key)) {
+                var changePlus = new Change(Change.Status.ADDED, key, "There is no value", mapFile2.get(key));
                 changes.add(changePlus);
             }
         }
-
         return changes;
     }
 }
