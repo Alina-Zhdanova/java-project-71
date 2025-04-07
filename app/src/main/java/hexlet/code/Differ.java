@@ -6,7 +6,6 @@ import hexlet.code.parsers.Parser;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Map;
 
 public class Differ {
 
@@ -20,10 +19,6 @@ public class Differ {
         return Files.readString(path).trim();
     }
 
-    private static Map<String, Object> parseFile(String readFile, String fileExtension) throws IOException {
-        return Parser.parse(readFile, fileExtension);
-    }
-
     public static String generate(String filePath1, String filePath2, String formatName) throws IOException {
 
         var readFile1 = readFile(filePath1);
@@ -32,10 +27,10 @@ public class Differ {
         var readFile2 = readFile(filePath2);
         var fileExtension2 = getExtension(filePath2);
 
-        var mapFile1 = parseFile(readFile1, fileExtension1);
-        var mapFile2 = parseFile(readFile2, fileExtension2);
+        var mapFile1 = Parser.parse(readFile1, fileExtension1);
+        var mapFile2 = Parser.parse(readFile2, fileExtension2);
 
-        var changes = ListOfChanges.getListOfChanges(mapFile1, mapFile2);
+        var changes = ChangesGenerator.getListOfChanges(mapFile1, mapFile2);
 
         var format = FormatterFactory.getFormatter(formatName);
         return format.formatter(changes);

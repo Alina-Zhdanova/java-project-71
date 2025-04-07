@@ -11,17 +11,45 @@ public final class StylishFormatter implements FormatterInterface {
 
         var result = new StringBuilder("{\n");
 
-        changes.forEach((change) -> {
-            result.append("  ");
-            result.append(change.getChange());
-            result.append(" ");
-            result.append(change.getKey());
-            result.append(": ");
-            result.append(change.getPastValue());
-            result.append("\n");
-        });
+        for (Change change : changes) {
+            switch (change.status()) {
+                case NOT_CHANGED -> {
+                    result.append("    ");
+                    result.append(change.key());
+                    result.append(": ");
+                    result.append(change.pastValue());
+                    result.append("\n");
+                }
+                case CHANGED -> {
+                    result.append("  - ");
+                    result.append(change.key());
+                    result.append(": ");
+                    result.append(change.pastValue());
+                    result.append("\n");
+                    result.append("  + ");
+                    result.append(change.key());
+                    result.append(": ");
+                    result.append(change.presentValue());
+                    result.append("\n");
+                }
+                case DELETED -> {
+                    result.append("  - ");
+                    result.append(change.key());
+                    result.append(": ");
+                    result.append(change.pastValue());
+                    result.append("\n");
+                }
+                case ADDED -> {
+                    result.append("  + ");
+                    result.append(change.key());
+                    result.append(": ");
+                    result.append(change.presentValue());
+                    result.append("\n");
+                }
+                default -> throw new Error("Unknown status!");
+            }
+        }
         result.append("}");
-
         return result.toString();
     }
 }

@@ -8,21 +8,15 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class ListOfChanges {
+public class ChangesGenerator {
     public static List<Change> getListOfChanges(Map<String, Object> mapFile1, Map<String, Object> mapFile2) {
         // получаем два сета ключей
         var keysFile1 = mapFile1.keySet();
         var keysFile2 = mapFile2.keySet();
 
-        // делаем сет ключей из первой и второй мапы, но чтобы они не повторялись
+        // делаем сет ключей из первой и второй мапы
         var keysFile = new HashSet<>(keysFile1);
-
-        for (var key : keysFile2) {
-            if (keysFile.contains(key)) {
-                continue;
-            }
-            keysFile.add(key);
-        }
+        keysFile.addAll(keysFile2);
 
         // сортируем сет ключей в алфавитном порядке
         var keys = keysFile.stream()
@@ -38,23 +32,23 @@ public class ListOfChanges {
             // 1. Ключ есть в обоих мапах - значение осталось прежним/изменилось
             if (keysFile1.contains(key) && keysFile2.contains(key)) {
                 if (Objects.equals(mapFile1.get(key), (mapFile2.get(key)))) {
-                    var change = new Change(" ", key, mapFile1.get(key));
+                    var change = new Change(Change.Status.NOT_CHANGED, key, mapFile1.get(key), mapFile2.get(key));
                     changes.add(change);
                 } else {
-                    var changeMinus = new Change("-", key, mapFile1.get(key));
-                    var changePlus = new Change("+", key, mapFile2.get(key));
-                    changes.add(changeMinus);
-                    changes.add(changePlus);
+                    var change = new Change(Change.Status.CHANGED, key, mapFile1.get(key), mapFile2.get(key));
+                    changes.add(change);
                 }
+                continue;
+            }
 
-                // 2. Ключ есть только в первой мапе - значение удалено
-            } else if (keysFile1.contains(key)) {
-                var changeMinus = new Change("-", key, mapFile1.get(key));
+            if (keysFile1.contains(key)) {
+                var changeMinus = new Change(Change.Status.DELETED, key, mapFile1.get(key), "There is no value");
                 changes.add(changeMinus);
+                continue;
+            }
 
-                // 3. Ключ есть только во второй мапе - значение добавлено
-            } else if (keysFile2.contains(key)) {
-                var changePlus = new Change("+", key, mapFile2.get(key));
+            if (keysFile2.contains(key)) {
+                var changePlus = new Change(Change.Status.ADDED, key, "There is no value", mapFile2.get(key));
                 changes.add(changePlus);
             }
         }
