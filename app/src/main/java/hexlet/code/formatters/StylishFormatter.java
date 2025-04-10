@@ -7,7 +7,7 @@ import java.util.List;
 public final class StylishFormatter implements FormatterInterface {
 
     @Override
-    public String formatter(List<Change> changes) {
+    public String format(List<Change> changes) {
 
         var result = new StringBuilder("{\n");
 

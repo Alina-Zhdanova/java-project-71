@@ -20,7 +20,7 @@ public final class PlainFormatter implements FormatterInterface {
     }
 
     @Override
-    public String formatter(List<Change> changes) {
+    public String format(List<Change> changes) {
 
         var changesPlain = new ArrayList<String>();
 

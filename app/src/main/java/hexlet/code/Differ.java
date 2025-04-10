@@ -33,7 +33,7 @@ public class Differ {
         var changes = ChangesGenerator.getListOfChanges(mapFile1, mapFile2);
 
         var formatter = FormatterFactory.getFormatter(formatName);
-        return formatter.formatter(changes);
+        return formatter.format(changes);
 
     }
 

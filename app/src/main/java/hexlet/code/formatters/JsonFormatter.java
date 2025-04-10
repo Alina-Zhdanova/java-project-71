@@ -10,7 +10,7 @@ import java.util.List;
 public final class JsonFormatter implements FormatterInterface {
 
     @Override
-    public String formatter(List<Change> changes) {
+    public String format(List<Change> changes) {
 
         var mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);

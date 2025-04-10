@@ -6,5 +6,5 @@ import java.io.IOException;
 import java.util.List;
 
 public interface FormatterInterface {
-    String formatter(List<Change> changes) throws IOException;
+    String format(List<Change> changes) throws IOException;
 }
