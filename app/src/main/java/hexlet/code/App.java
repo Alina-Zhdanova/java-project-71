@@ -24,7 +24,7 @@ class App implements Runnable {
     @Override
     public void run() {
         try {
-            var result = Differ.format(filepath1, filepath2, formatName);
+            var result = Differ.generate(filepath1, filepath2, formatName);
             System.out.println(result);
         } catch (IOException e) {
             throw new RuntimeException(e);

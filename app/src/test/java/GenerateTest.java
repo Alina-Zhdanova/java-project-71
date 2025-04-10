@@ -38,7 +38,7 @@ public final class GenerateTest {
         var actual = getActual(formatName);
         var filePath1 = getPath(fileName1);
         var filePath2 = getPath(fileName2);
-        var expected = Differ.format(filePath1, filePath2, formatName);
+        var expected = Differ.generate(filePath1, filePath2, formatName);
 
         assertEquals(actual, expected);
     }
@@ -58,7 +58,7 @@ public final class GenerateTest {
     public void noSuchFileTest(String formatName, String fileName1, String fileName2) {
         var filePath1 = getPath(fileName1);
         var filePath2 = getPath(fileName2);
-        assertThrows(IOException.class, () -> Differ.format(filePath1, filePath2, formatName));
+        assertThrows(IOException.class, () -> Differ.generate(filePath1, filePath2, formatName));
     }
 
     @ParameterizedTest
@@ -71,7 +71,7 @@ public final class GenerateTest {
         var actual = getActual(actualName);
         var filePath1 = getPath(fileName1);
         var filePath2 = getPath(fileName2);
-        var expected = Differ.format(filePath1, filePath2);
+        var expected = Differ.generate(filePath1, filePath2);
 
         assertEquals(actual, expected);
     }
@@ -89,7 +89,7 @@ public final class GenerateTest {
         var actual = getActual(formatName);
         var filePath1 = getPath(fileName1);
         var filePath2 = getPath(fileName2);
-        var expected = Differ.format(filePath1, filePath2, formatName);
+        var expected = Differ.generate(filePath1, filePath2, formatName);
 
         assertEquals(actual, expected);
     }
