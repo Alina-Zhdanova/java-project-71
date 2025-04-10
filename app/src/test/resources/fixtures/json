@@ -1,55 +1,84 @@
-{
-  "chars2" : {
-    "-" : [ "d", "e", "f" ],
-    "+" : false
-  },
-  "chars3" : {
-    "+" : "value"
-  },
-  "checked" : {
-    "-" : false,
-    "+" : true
-  },
-  "default" : {
-    "-" : null,
-    "+" : [ "value1", "value2" ]
-  },
-  "id" : {
-    "-" : 45,
-    "+" : null
-  },
-  "key1" : {
-    "-" : "value1"
-  },
-  "key2" : {
-    "+" : "value2"
-  },
-  "numbers2" : {
-    "-" : [ 2, 3, 4, 5 ],
-    "+" : [ 22, 33, 44, 55 ]
-  },
-  "numbers3" : {
-    "-" : [ 3, 4, 5 ]
-  },
-  "numbers4" : {
-    "+" : [ 4, 5, 6 ]
-  },
-  "obj1" : {
-    "+" : {
-      "nestedKey" : "value",
-      "isNested" : true
-    }
-  },
-  "setting1" : {
-    "-" : "Some value",
-    "+" : "Another value"
-  },
-  "setting2" : {
-    "-" : 200,
-    "+" : 300
-  },
-  "setting3" : {
-    "-" : true,
-    "+" : "none"
+[ {
+  "status" : "NOT_CHANGED",
+  "key" : "chars1",
+  "pastValue" : [ "a", "b", "c" ],
+  "presentValue" : [ "a", "b", "c" ]
+}, {
+  "status" : "CHANGED",
+  "key" : "chars2",
+  "pastValue" : [ "d", "e", "f" ],
+  "presentValue" : false
+}, {
+  "status" : "ADDED",
+  "key" : "chars3",
+  "pastValue" : "There is no value",
+  "presentValue" : "value"
+}, {
+  "status" : "CHANGED",
+  "key" : "checked",
+  "pastValue" : false,
+  "presentValue" : true
+}, {
+  "status" : "CHANGED",
+  "key" : "default",
+  "pastValue" : null,
+  "presentValue" : [ "value1", "value2" ]
+}, {
+  "status" : "CHANGED",
+  "key" : "id",
+  "pastValue" : 45,
+  "presentValue" : null
+}, {
+  "status" : "DELETED",
+  "key" : "key1",
+  "pastValue" : "value1",
+  "presentValue" : "There is no value"
+}, {
+  "status" : "ADDED",
+  "key" : "key2",
+  "pastValue" : "There is no value",
+  "presentValue" : "value2"
+}, {
+  "status" : "NOT_CHANGED",
+  "key" : "numbers1",
+  "pastValue" : [ 1, 2, 3, 4 ],
+  "presentValue" : [ 1, 2, 3, 4 ]
+}, {
+  "status" : "CHANGED",
+  "key" : "numbers2",
+  "pastValue" : [ 2, 3, 4, 5 ],
+  "presentValue" : [ 22, 33, 44, 55 ]
+}, {
+  "status" : "DELETED",
+  "key" : "numbers3",
+  "pastValue" : [ 3, 4, 5 ],
+  "presentValue" : "There is no value"
+}, {
+  "status" : "ADDED",
+  "key" : "numbers4",
+  "pastValue" : "There is no value",
+  "presentValue" : [ 4, 5, 6 ]
+}, {
+  "status" : "ADDED",
+  "key" : "obj1",
+  "pastValue" : "There is no value",
+  "presentValue" : {
+    "nestedKey" : "value",
+    "isNested" : true
   }
-}
+}, {
+  "status" : "CHANGED",
+  "key" : "setting1",
+  "pastValue" : "Some value",
+  "presentValue" : "Another value"
+}, {
+  "status" : "CHANGED",
+  "key" : "setting2",
+  "pastValue" : 200,
+  "presentValue" : 300
+}, {
+  "status" : "CHANGED",
+  "key" : "setting3",
+  "pastValue" : true,
+  "presentValue" : "none"
+} ]

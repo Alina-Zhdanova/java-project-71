@@ -9,13 +9,12 @@ import java.util.Map;
 
 public final class PlainFormatter implements FormatterInterface {
 
-    private static Object getValue(Object value) {
+    private static Object formatValue(Object value) {
         if (value instanceof Map || value instanceof Iterable || value instanceof Array) {
             return "[complex value]";
-        } else {
-            if (value instanceof String) {
-                return "'" + value + "'";
-            }
+        }
+        if (value instanceof String) {
+            return "'" + value + "'";
         }
         return value;
     }
@@ -34,8 +33,8 @@ public final class PlainFormatter implements FormatterInterface {
                 case CHANGED -> {
                     var pastValue = line.pastValue();
                     var presentValue = line.presentValue();
-                    var formatPastValue = getValue(pastValue);
-                    var formatPresentValue = getValue(presentValue);
+                    var formatPastValue = formatValue(pastValue);
+                    var formatPresentValue = formatValue(presentValue);
 
                     var change = "Property '" + line.key() + "' was updated. From " + formatPastValue
                         + " to " + formatPresentValue;
@@ -49,13 +48,13 @@ public final class PlainFormatter implements FormatterInterface {
 
                 case ADDED -> {
                     var value = line.presentValue();
-                    var formatValue = getValue(value);
+                    var formatValue = formatValue(value);
 
                     var change = "Property '" + line.key() + "' was added with value: " + formatValue;
                     changesPlain.add(change);
                 }
 
-                default -> throw new Error("Unknown status!");
+                default -> throw new RuntimeException("Unknown status!");
 
             }
         }

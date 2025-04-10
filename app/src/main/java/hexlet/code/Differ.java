@@ -19,7 +19,7 @@ public class Differ {
         return Files.readString(path).trim();
     }
 
-    public static String generate(String filePath1, String filePath2, String formatName) throws IOException {
+    public static String format(String filePath1, String filePath2, String formatName) throws IOException {
 
         var readFile1 = readFile(filePath1);
         var fileExtension1 = getExtension(filePath1);
@@ -32,12 +32,12 @@ public class Differ {
 
         var changes = ChangesGenerator.getListOfChanges(mapFile1, mapFile2);
 
-        var format = FormatterFactory.getFormatter(formatName);
-        return format.formatter(changes);
+        var formatter = FormatterFactory.getFormatter(formatName);
+        return formatter.formatter(changes);
 
     }
 
-    public static String generate(String filePath1, String filePath2) throws IOException {
-        return generate(filePath1, filePath2, "stylish");
+    public static String format(String filePath1, String filePath2) throws IOException {
+        return format(filePath1, filePath2, "stylish");
     }
 }

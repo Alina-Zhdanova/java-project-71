@@ -1,5 +1,7 @@
 package hexlet.code;
 
+import hexlet.code.parsers.Status;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -32,23 +34,23 @@ public class ChangesGenerator {
             // 1. Ключ есть в обоих мапах - значение осталось прежним/изменилось
             if (keysFile1.contains(key) && keysFile2.contains(key)) {
                 if (Objects.equals(mapFile1.get(key), (mapFile2.get(key)))) {
-                    var change = new Change(Change.Status.NOT_CHANGED, key, mapFile1.get(key), mapFile2.get(key));
+                    var change = new Change(Status.NOT_CHANGED, key, mapFile1.get(key), mapFile2.get(key));
                     changes.add(change);
                 } else {
-                    var change = new Change(Change.Status.CHANGED, key, mapFile1.get(key), mapFile2.get(key));
+                    var change = new Change(Status.CHANGED, key, mapFile1.get(key), mapFile2.get(key));
                     changes.add(change);
                 }
                 continue;
             }
 
             if (keysFile1.contains(key)) {
-                var changeMinus = new Change(Change.Status.DELETED, key, mapFile1.get(key), "There is no value");
+                var changeMinus = new Change(Status.DELETED, key, mapFile1.get(key), "There is no value");
                 changes.add(changeMinus);
                 continue;
             }
 
             if (keysFile2.contains(key)) {
-                var changePlus = new Change(Change.Status.ADDED, key, "There is no value", mapFile2.get(key));
+                var changePlus = new Change(Status.ADDED, key, "There is no value", mapFile2.get(key));
                 changes.add(changePlus);
             }
         }

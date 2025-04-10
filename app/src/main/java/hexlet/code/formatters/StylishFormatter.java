@@ -46,7 +46,7 @@ public final class StylishFormatter implements FormatterInterface {
                     result.append(change.presentValue());
                     result.append("\n");
                 }
-                default -> throw new Error("Unknown status!");
+                default -> throw new RuntimeException("Unknown status!");
             }
         }
         result.append("}");
