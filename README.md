@@ -3,7 +3,6 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/881ab19642f223432633/maintainability)](https://codeclimate.com/github/Alina-Zhdanova/java-project-71/maintainability)
 [![Java CI](https://github.com/Alina-Zhdanova/java-project-71/actions/workflows/ci.yml/badge.svg)](https://github.com/Alina-Zhdanova/java-project-71/actions/workflows/ci.yml)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/881ab19642f223432633/test_coverage)](https://codeclimate.com/github/Alina-Zhdanova/java-project-71/test_coverage)
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=Alina-Zhdanova_java-project-71&metric=alert_status)](https://sonarcloud.io/dashboard?id=Alina-Zhdanova_java-project-71)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Alina-Zhdanova_java-project-71&metric=coverage)](https://sonarcloud.io/dashboard?id=Alina-Zhdanova_java-project-71)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=Alina-Zhdanova_java-project-71&metric=bugs)](https://sonarcloud.io/dashboard?id=Alina-Zhdanova_java-project-71)
 
